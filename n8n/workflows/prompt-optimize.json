@@ -1,0 +1,112 @@
+{
+  "name": "prompt-optimize",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "prompt-optimize",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -320,
+        -16
+      ],
+      "id": "7f3bba4e-c52a-4cc6-83b8-c5d6082995a5",
+      "name": "Webhook",
+      "webhookId": "fc790e61-f958-4baa-bed8-bb2d1284d822"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.155:8000/api/optimize",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"description\": \"{{$json.body.description}}\",\n  \"role\": \"{{$json.body.role}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -96,
+        -16
+      ],
+      "id": "33bcb8b0-ae94-4e07-b621-a2f11e4e5eb5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        128,
+        -16
+      ],
+      "id": "904575d3-6be7-4418-bfec-2da9ff16e131",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "content": "## Prompt Optimize",
+        "height": 224,
+        "width": 704,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -384,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "b9229df1-1efd-41d7-919f-c943c6c8be7d",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d9207155-d811-498f-b74f-8b0a217d0f5d",
+  "meta": {
+    "instanceId": "ad8b686e4cce2cb62db91b84349cdff2b13ad2261d3b5fa42cf025d21032b6a0"
+  },
+  "id": "PLws2ah946zMu8VR",
+  "tags": []
+}
